@@ -55,6 +55,22 @@ public class AccountController {
 		return response;
 	}
 
+	
+	@PostMapping(value = "/withDrawAmount", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public BankResponse WithDrawAmount(@RequestBody TransactionRequest request) throws Exception {
+		BankResponse response= new BankResponse();
+		try {
+			response = accountService.WithDrawAmount(request);
+		} catch (Exception e) {
+			logger.error("Exception Occured",e);
+			response=response.setExceptionData();
+		}
+
+		return response;
+	}
+	
+
 
 
 }

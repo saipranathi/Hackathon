@@ -9,7 +9,6 @@ import static fr.ing.interview.Constants.*;
 
 import fr.ing.interview.DAO.AccountDAO;
 import fr.ing.interview.DAO.TransactionDAO;
-import fr.ing.interview.DAOImpl.AccountDAOImpl;
 import fr.ing.interview.Model.Account;
 import fr.ing.interview.Model.Transaction;
 import fr.ing.interview.Model.TransactionRequest;
@@ -58,6 +57,32 @@ public class AccountServiceimpl implements AccountService {
 		account.setMessage(balance);
 		response.setAccountDetails(account);
 		return response;
+	}
+
+	@Override
+	@Transactional(rollbackFor = { RuntimeException.class })
+	public BankResponse WithDrawAmount(TransactionRequest request) throws Exception {
+		BankResponse response = new BankResponse();
+		String accountNumber = request.getAccountNumber();
+		BigDecimal amount = request.getAmount();
+
+		Account account = accountDao.findByAccountNumberEquals(accountNumber);
+		if (account.getCurrentBalance().compareTo(amount) >= 0 && account.getActive() == 'y') {
+			Account acc = new Account();
+			account.setCurrentBalance(account.getCurrentBalance().subtract(amount));
+			acc = accountDao.save(account);
+			transactionDao.save(new Transaction(0L, accountNumber, debited, amount));
+			response.setAccountDetails(acc);
+			return response;
+		}
+
+		else {
+			transactionDao.save(new Transaction(0L, accountNumber, txnFail, amount));
+			response.setErrorMessage(failedMsg);
+			return response;
+
+		}
+
 	}
 
 	
