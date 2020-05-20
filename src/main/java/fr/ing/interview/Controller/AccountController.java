@@ -31,7 +31,7 @@ public class AccountController {
 	@PostMapping(value = "/depositAmount", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public String DepositAmount(@RequestBody TransactionRequest request) throws Exception {
-		logger.info("Start of DepositAmount() API,It input is AccountNumber and Amount to deposit",
+		logger.info("Start of DepositAmount() API,Its input is AccountNumber '{}' and DepositAmount '{}'",
 				request.getAccountNumber(), request.getAmount());
 		String res = null;
 		if (!(request.getAmount().compareTo(minAmt) == 1)) {
@@ -39,7 +39,7 @@ public class AccountController {
 
 		}
 		res = accountService.Deposit(request);
-		logger.info("End of DepositAmount() API,It output is AccountNumber ", request.getAccountNumber());
+		logger.info("End of DepositAmount() API,It output is AccountNumber '{}' ",res);
 		return res;
 
 	}
@@ -47,16 +47,10 @@ public class AccountController {
 	@GetMapping(value = "/getCurrentBalnce/{accountNumber}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public Account GetCurrentBalance(@PathVariable("accountNumber") String accountNumber) throws Exception {
-		logger.info("Start of GetCurrentBalance() API,It input is AccountNumber", accountNumber);
+		logger.info("Start of GetCurrentBalance() API,It input is AccountNumber '{}'", accountNumber);
 		Account response = new Account();
-		try {
-			response = accountService.FetchBalance(accountNumber);
-		} catch (Exception e) {
-			logger.error("Exception Occured", e);
-			throw new Exception("Transaction Failed  " + e.getMessage());
-
-		}
-		logger.info("End of GetCurrentBalance() API,It output is Account Object with currentBalance and Message",
+		response = accountService.FetchBalance(accountNumber);
+		logger.info("End of GetCurrentBalance() API,It output is Account Object with currentBalance '{}' and Message '{}'",
 				response.getCurrentBalance(), response.getMessage());
 		return response;
 	}
@@ -64,17 +58,12 @@ public class AccountController {
 	@PostMapping(value = "/withDrawAmount", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public String WithDrawAmount(@RequestBody TransactionRequest request) throws Exception {
-		logger.info("Start of WithDrawAmount() API,It input is AccountNumber and Amount to withdraw",
+		logger.info("Start of WithDrawAmount() API,It input is AccountNumber '{}' and '{}'Amount to withdraw",
 				request.getAccountNumber(), request.getAmount());
 		String res = null;
+		res = accountService.WithDrawAmount(request);
 
-		try {
-			res = accountService.WithDrawAmount(request);
-		} catch (Exception e) {
-			logger.error("Exception Occured", e);
-			throw new Exception("Transaction Failed  " + e.getMessage());
-		}
-		logger.info("End of WithDrawAmount() API,It output is AccountNumber ", request.getAccountNumber());
+		logger.info("End of WithDrawAmount() API,It output is AccountNumber '{}' ", request.getAccountNumber());
 		return res;
 	}
 
