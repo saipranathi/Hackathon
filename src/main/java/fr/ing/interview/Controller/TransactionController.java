@@ -20,7 +20,7 @@ import fr.ing.interview.Service.TransactionService;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-	private static Logger logger = LoggerFactory.getLogger(AccountController.class);
+	private static Logger logger = LoggerFactory.getLogger(TransactionController.class);
 
 	@Autowired(required = true)
 	TransactionService transactionService;
@@ -28,16 +28,9 @@ public class TransactionController {
 	@GetMapping(value = "/displayTxn/{accountNumber}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<Transaction> DisplayTxn(@PathVariable("accountNumber") String accountNumber) throws Exception {
-		logger.info("Start of DisplayTxn() API,It input is AccountNumber",accountNumber);
-		try {
-			return transactionService.displayTransactions(accountNumber);
-		}
+		logger.info("Start of DisplayTxn() API,It input is AccountNumber '{}'", accountNumber);
 
-		catch (Exception ex) {
-			logger.error("Exception Occured", ex);
-			throw new Exception("Transaction Failed  " + ex.getMessage());
-
-		}
+		return transactionService.displayTransactions(accountNumber);
 
 	}
 }
