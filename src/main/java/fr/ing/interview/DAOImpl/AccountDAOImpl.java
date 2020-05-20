@@ -53,7 +53,8 @@ public class AccountDAOImpl implements AccountDAO {
 		return account;
 
 	}
-
+	
+	@Override
 	public Account fetchBalance(String accountNumber) {
 		String query = "SELECT current_balance FROM account WHERE account_number=?";
 		Account account = template.queryForObject(query, new Object[] { accountNumber },

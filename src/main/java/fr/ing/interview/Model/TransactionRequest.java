@@ -2,21 +2,13 @@ package fr.ing.interview.Model;
 
 import java.math.BigDecimal;
 
+
 public class TransactionRequest {
 
 	private String AccountNumber;
 
 	private BigDecimal amount;
 	
-	private String type;
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	public String getAccountNumber() {
 		return AccountNumber;
@@ -34,11 +26,10 @@ public class TransactionRequest {
 		this.amount = amount;
 	}
 
-	public TransactionRequest(String accountNumber, BigDecimal amount, String type) {
+	public TransactionRequest(String accountNumber, BigDecimal amount) {
 		super();
 		AccountNumber = accountNumber;
 		this.amount = amount;
-		this.type = type;
 	}
 	
 	

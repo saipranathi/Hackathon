@@ -36,7 +36,7 @@ public class TestAccountService {
 	public static void setUp() throws Exception {
 		accountService = mock(AccountService.class);
 
-		a1 = new TransactionRequest("200", testAmt, "credited");
+		a1 = new TransactionRequest("200", testAmt);
 		acc = new Account("200", "saipranathi", testBal, 'y', timestamp, timestamp);
 		bal=new Account(null, null, testBal,'\u0000', null, null);
 		res = new BankResponse(acc, "null");

@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import fr.ing.interview.Model.TransactionRequest;
 import fr.ing.interview.Response.BankResponse;
-import static fr.ing.interview.Constants.*;
 import fr.ing.interview.Service.AccountService;
+
 
 @Controller
 @EnableAutoConfiguration
@@ -27,15 +27,14 @@ public class AccountController {
 	AccountService accountService;
 
 	@PostMapping(value = "/depositAmount", consumes = "application/json", produces = "application/json")
-	@RequestMapping("/depositAmount")
 	@ResponseBody
-	public BankResponse DepositAmount(@RequestBody TransactionRequest request) {
+	public BankResponse DepositAmount(@RequestBody TransactionRequest request) throws Exception {
 		BankResponse response= new BankResponse();
 		try {
 			response = accountService.Deposit(request);
 		} catch (Exception e) {
 			logger.error("Exception Occured",e);
-			response=setExceptionData();
+			response=response.setExceptionData();
 		}
 
 		return response;
@@ -49,19 +48,13 @@ public class AccountController {
 			response = accountService.FetchBalance(accountNumber);
 		} catch (Exception e) {
 			logger.error("Exception Occured",e);
-			response=setExceptionData();
+			response=response.setExceptionData();
 
 		}
 
 		return response;
 	}
 
-	public BankResponse setExceptionData()
-	{
-		BankResponse res= new BankResponse();
-		 res.setErrorMessage(resMsg);
-		 return res;
-		
-	}
+
 
 }
