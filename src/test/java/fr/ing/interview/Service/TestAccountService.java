@@ -2,8 +2,6 @@ package fr.ing.interview.Service;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import java.sql.Timestamp;
-import java.util.Date;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -24,8 +22,6 @@ public class TestAccountService {
 
 	private static TransactionRequest a1;
 	private static Account bal;
-	static Date date = new Date();
-	static Timestamp timestamp = new Timestamp(date.getTime());
 
 	@BeforeClass
 	public static void setUp() throws Exception {

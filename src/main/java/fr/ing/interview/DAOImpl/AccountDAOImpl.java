@@ -1,17 +1,10 @@
 package fr.ing.interview.DAOImpl;
 
 import fr.ing.interview.DAO.AccountDAO;
-import fr.ing.interview.Exception.AccountNumberNotFoundException;
 import fr.ing.interview.Model.Account;
-import static fr.ing.interview.Constants.*;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import javax.transaction.Transactional;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +17,6 @@ public class AccountDAOImpl implements AccountDAO {
 	@Autowired
 	JdbcTemplate template;
 
-	private static Logger LOGGER = LoggerFactory.getLogger(AccountDAOImpl.class);
 
 	@Override
 	public int save(Account account) {
