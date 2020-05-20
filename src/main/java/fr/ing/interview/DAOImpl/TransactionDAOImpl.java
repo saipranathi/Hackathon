@@ -1,7 +1,7 @@
 package fr.ing.interview.DAOImpl;
 
 import fr.ing.interview.DAO.TransactionDAO;
-import fr.ing.interview.Model.Account;
+import fr.ing.interview.Exception.AccountNumberNotFoundException;
 import fr.ing.interview.Model.Transaction;
 
 import java.sql.ResultSet;
@@ -11,10 +11,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
-import org.springframework.jdbc.core.RowCallbackHandler;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -32,13 +30,14 @@ public class TransactionDAOImpl implements TransactionDAO {
 	}
 
 	@Override
-	public List<Transaction> fetchTxnList(String accountNumber) {
+	public List<Transaction> fetchTxnList(String accountNumber) throws AccountNumberNotFoundException {
 		String query = "SELECT * FROM transaction where account_number=?";
+		List<Transaction> list = new ArrayList<Transaction>();
+
 		return template.query(query, new ResultSetExtractor<List<Transaction>>() {
 			@Override
 			public List<Transaction> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
-				List<Transaction> list = new ArrayList<Transaction>();
 				while (rs.next()) {
 					Transaction t = new Transaction();
 					t.setTransactionId(rs.getLong(1));
@@ -49,6 +48,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 					list.add(t);
 				}
 				return list;
+
 			}
 		}, accountNumber);
 

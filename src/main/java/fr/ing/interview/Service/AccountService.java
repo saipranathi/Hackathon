@@ -1,14 +1,15 @@
 package fr.ing.interview.Service;
 
+import fr.ing.interview.Exception.MinimumAmountException;
+import fr.ing.interview.Model.Account;
 import fr.ing.interview.Model.TransactionRequest;
-import fr.ing.interview.Response.BankResponse;
 
 public interface AccountService {
 
-	public BankResponse Deposit(TransactionRequest request) throws Exception;
+	public String Deposit(TransactionRequest request) throws Exception;
 
-	public BankResponse FetchBalance(String request) throws Exception;
+	public Account FetchBalance(String request) throws Exception;
 
-	public BankResponse WithDrawAmount(TransactionRequest request) throws Exception;
+	public String WithDrawAmount(TransactionRequest request) throws Exception, MinimumAmountException;
 
 }

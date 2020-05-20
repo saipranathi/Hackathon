@@ -14,8 +14,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import fr.ing.interview.Model.Account;
 import fr.ing.interview.Model.TransactionRequest;
-import fr.ing.interview.Response.BankResponse;
-
 import static fr.ing.interview.Constants.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -25,9 +23,6 @@ public class TestAccountService {
 	static AccountService accountService;
 
 	private static TransactionRequest a1;
-	private static BankResponse res;
-	private static BankResponse balance;
-	private static Account acc;
 	private static Account bal;
 	static Date date = new Date();
 	static Timestamp timestamp = new Timestamp(date.getTime());
@@ -37,14 +32,11 @@ public class TestAccountService {
 		accountService = mock(AccountService.class);
 
 		a1 = new TransactionRequest("200", testAmt);
-		acc = new Account("200", "saipranathi", testBal, 'y', timestamp, timestamp);
 		bal = new Account(null, null, testBal, '\u0000', null, null);
-		res = new BankResponse(acc, "null");
-		balance = new BankResponse(bal, "null");
 
-		when(accountService.Deposit(a1)).thenReturn(res);
-		when(accountService.FetchBalance("300")).thenReturn(balance);
-		when(accountService.WithDrawAmount(a1)).thenReturn(res);
+		when(accountService.Deposit(a1)).thenReturn("400");
+		when(accountService.FetchBalance("300")).thenReturn(bal);
+		when(accountService.WithDrawAmount(a1)).thenReturn("400");
 
 	}
 
@@ -55,33 +47,24 @@ public class TestAccountService {
 
 	@Test
 	public void testDeposit() throws Exception {
-		BankResponse acc = accountService.Deposit(a1);
-		assertEquals("200", acc.getAccountDetails().getAccountNumber());
-		assertEquals("saipranathi", acc.getAccountDetails().getAccountName());
-		assertEquals(testBal, acc.getAccountDetails().getCurrentBalance());
-		assertEquals('y', acc.getAccountDetails().getActive());
-		assertEquals(timestamp, acc.getAccountDetails().getModifiedDate());
-		assertEquals(timestamp, acc.getAccountDetails().getCreatedDate());
+		String acc = accountService.Deposit(a1);
+		assertEquals("400", acc);
 
 	}
 
 	@Test
 	public void testFetchBalance() throws Exception {
 
-		BankResponse acc = accountService.FetchBalance("300");
-		assertEquals(testBal, acc.getAccountDetails().getCurrentBalance());
+		Account acc = accountService.FetchBalance("300");
+		assertEquals(testBal, acc.getCurrentBalance());
 
 	}
 	
 	@Test
 	public void testWithDrawAmount() throws Exception {
-		BankResponse acc = accountService.WithDrawAmount(a1);
-		assertEquals("200", acc.getAccountDetails().getAccountNumber());
-		assertEquals("saipranathi", acc.getAccountDetails().getAccountName());
-		assertEquals(testBal, acc.getAccountDetails().getCurrentBalance());
-		assertEquals('y', acc.getAccountDetails().getActive());
-		assertEquals(timestamp, acc.getAccountDetails().getModifiedDate());
-		assertEquals(timestamp, acc.getAccountDetails().getCreatedDate());
+		String acc = accountService.WithDrawAmount(a1);
+		assertEquals("400", acc);
+
 
 	}
 

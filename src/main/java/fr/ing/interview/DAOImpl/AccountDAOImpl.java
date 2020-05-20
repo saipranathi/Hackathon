@@ -1,6 +1,7 @@
 package fr.ing.interview.DAOImpl;
 
 import fr.ing.interview.DAO.AccountDAO;
+import fr.ing.interview.Exception.AccountNumberNotFoundException;
 import fr.ing.interview.Model.Account;
 import static fr.ing.interview.Constants.*;
 
@@ -26,20 +27,12 @@ public class AccountDAOImpl implements AccountDAO {
 	private static Logger LOGGER = LoggerFactory.getLogger(AccountDAOImpl.class);
 
 	@Override
-	public Account save(Account account) {
-		int updateCount = 0;
+	public int save(Account account) {
 		LocalDateTime currentTime = LocalDateTime.now();
 		LocalDate modifiedDate = currentTime.toLocalDate();
 
 		String query = "update  account set current_balance=?,modified_date=? where account_number=?";
-		updateCount = template.update(query, account.getCurrentBalance(), modifiedDate, account.getAccountNumber());
-		if (updateCount > 0) {
-			LOGGER.debug("Inserted Succcesfully ");
-			account.setMessage(successMsg);
-		} else {
-			LOGGER.error("failedMsg");
-		}
-		return account;
+		return template.update(query, account.getCurrentBalance(), modifiedDate, account.getAccountNumber());
 
 	}
 
@@ -48,9 +41,7 @@ public class AccountDAOImpl implements AccountDAO {
 		String query = "SELECT * FROM account WHERE account_number=?";
 		Account account = template.queryForObject(query, new Object[] { accountNumber },
 				new BeanPropertyRowMapper<>(Account.class));
-
 		return account;
-
 	}
 
 	@Override

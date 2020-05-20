@@ -1,5 +1,7 @@
 package fr.ing.interview.Controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import fr.ing.interview.Response.BankResponse;
+import fr.ing.interview.Model.Transaction;
 import fr.ing.interview.Service.TransactionService;
 
 @Controller
@@ -25,16 +27,16 @@ public class TransactionController {
 
 	@GetMapping(value = "/displayTxn/{accountNumber}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public BankResponse DisplayTxn(@PathVariable("accountNumber") String accountNumber) throws Exception {
-		BankResponse response = new BankResponse();
+	public List<Transaction> DisplayTxn(@PathVariable("accountNumber") String accountNumber) throws Exception {
 		try {
-			response = transactionService.displayTransactions(accountNumber);
-		} catch (Exception e) {
-			logger.error("Exception Occured", e);
-			response = response.setExceptionData();
+			return transactionService.displayTransactions(accountNumber);
 		}
 
-		return response;
+		catch (Exception ex) {
+			logger.error("Exception Occured", ex);
+			throw new Exception("Transaction Failed  " + ex.getMessage());
+
+		}
 
 	}
 }

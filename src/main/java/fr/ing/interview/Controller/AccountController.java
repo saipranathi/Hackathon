@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import static fr.ing.interview.Constants.*;
+
+import fr.ing.interview.Exception.MinimumAmountException;
+import fr.ing.interview.Model.Account;
 import fr.ing.interview.Model.TransactionRequest;
 import fr.ing.interview.Response.BankResponse;
 import fr.ing.interview.Service.AccountService;
@@ -27,27 +32,30 @@ public class AccountController {
 
 	@PostMapping(value = "/depositAmount", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public BankResponse DepositAmount(@RequestBody TransactionRequest request) throws Exception {
-		BankResponse response = new BankResponse();
-		try {
-			response = accountService.Deposit(request);
-		} catch (Exception e) {
-			logger.error("Exception Occured", e);
-			response = response.setExceptionData();
-		}
+	public String DepositAmount(@RequestBody TransactionRequest request) throws Exception {
+		String res = null;
+		if (!(request.getAmount().compareTo(minAmt) == 1)) {
+			throw new MinimumAmountException("Amount Greater than of 0.01 is required");
 
-		return response;
+		}
+		try {
+			res = accountService.Deposit(request);
+		} catch (Exception exception) {
+			throw new Exception("Transaction Failed  " + exception.getMessage());
+		}
+		return res;
+
 	}
 
 	@GetMapping(value = "/getCurrentBalnce/{accountNumber}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public BankResponse GetCurrentBalance(@PathVariable("accountNumber") String accountNumber) {
-		BankResponse response = new BankResponse();
+	public Account GetCurrentBalance(@PathVariable("accountNumber") String accountNumber) throws Exception {
+		Account response = new Account();
 		try {
 			response = accountService.FetchBalance(accountNumber);
 		} catch (Exception e) {
 			logger.error("Exception Occured", e);
-			response = response.setExceptionData();
+			throw new Exception("Transaction Failed  " + e.getMessage());
 
 		}
 
@@ -56,16 +64,17 @@ public class AccountController {
 
 	@PostMapping(value = "/withDrawAmount", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public BankResponse WithDrawAmount(@RequestBody TransactionRequest request) throws Exception {
-		BankResponse response = new BankResponse();
+	public String WithDrawAmount(@RequestBody TransactionRequest request) throws Exception {
+		String res = null;
+
 		try {
-			response = accountService.WithDrawAmount(request);
+			res = accountService.WithDrawAmount(request);
 		} catch (Exception e) {
 			logger.error("Exception Occured", e);
-			response = response.setExceptionData();
+			throw new Exception("Transaction Failed  " + e.getMessage());
 		}
 
-		return response;
+		return res;
 	}
 
 }
