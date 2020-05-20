@@ -30,7 +30,7 @@ public class AccountController {
 
 	@PostMapping(value = "/depositAmount", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public String DepositAmount(@RequestBody TransactionRequest request) throws Exception {
+	public String DepositAmount(@RequestBody TransactionRequest request) throws Exception,MinimumAmountException {
 		logger.info("Start of DepositAmount() API,Its input is AccountNumber '{}' and DepositAmount '{}'",
 				request.getAccountNumber(), request.getAmount());
 		String res = null;
