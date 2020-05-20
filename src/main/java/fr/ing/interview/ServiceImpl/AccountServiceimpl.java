@@ -50,4 +50,14 @@ public class AccountServiceimpl implements AccountService {
 
 	}
 
+	@Override
+	public BankResponse FetchBalance(String accountNumber) throws Exception {
+		BankResponse response = new BankResponse();
+		Account account = accountDao.fetchBalance(accountNumber);
+		account.setMessage(balance);
+		response.setAccountDetails(account);
+		return response;
+	}
+
+	
 }

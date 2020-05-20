@@ -26,7 +26,9 @@ public class TestAccountService {
 
 	private static TransactionRequest a1;
 	private static BankResponse res;
+	private static BankResponse balance;
 	private static Account acc;
+	private static Account bal;
 	static Date date = new Date();
 	static Timestamp timestamp = new Timestamp(date.getTime());
 
@@ -36,9 +38,13 @@ public class TestAccountService {
 
 		a1 = new TransactionRequest("200", testAmt, "credited");
 		acc = new Account("200", "saipranathi", testBal, 'y', timestamp, timestamp);
+		bal=new Account(null, null, testBal,'\u0000', null, null);
 		res = new BankResponse(acc, "null");
+		balance = new BankResponse(bal, "null");
+
 
 		when(accountService.Deposit(a1)).thenReturn(res);
+	    when(accountService.FetchBalance("300")).thenReturn(balance);
 
 	}
 
@@ -58,5 +64,14 @@ public class TestAccountService {
 		assertEquals(timestamp, acc.getAccountDetails().getCreatedDate());
 
 	}
+
+    @Test
+    public void testFetchBalance() throws Exception{   
+    
+
+		BankResponse acc = accountService.FetchBalance("300");
+        assertEquals(testBal, acc.getAccountDetails().getCurrentBalance());
+
+}
 
 }

@@ -4,14 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import fr.ing.interview.Model.Account;
 import fr.ing.interview.Model.TransactionRequest;
 import fr.ing.interview.Response.BankResponse;
 import static fr.ing.interview.Constants.*;
@@ -36,11 +35,27 @@ public class AccountController {
 			response = accountService.Deposit(request);
 		} catch (Exception e) {
 			logger.error("Exception Occured",e);
+			response=setExceptionData();
 		}
 
 		return response;
 	}
 	
+	@GetMapping(value = "/getCurrentBalnce/{accountNumber}", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public BankResponse GetCurrentBalance(@PathVariable("accountNumber") String accountNumber) {
+		BankResponse response= new BankResponse();
+		try {
+			response = accountService.FetchBalance(accountNumber);
+		} catch (Exception e) {
+			logger.error("Exception Occured",e);
+			response=setExceptionData();
+
+		}
+
+		return response;
+	}
+
 	public BankResponse setExceptionData()
 	{
 		BankResponse res= new BankResponse();
