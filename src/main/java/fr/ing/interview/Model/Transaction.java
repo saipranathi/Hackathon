@@ -8,23 +8,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "transaction")
 public class Transaction {
-    @Id
-    @GeneratedValue
-    private Long transactionId;
-    
-    private String accountNumber;
+	@Id
+	@GeneratedValue
+	private Long transactionId;
 
-    private String type;
+	private String accountNumber;
 
-    private BigDecimal transactionAmount;
+	private String type;
 
-    private Timestamp transactionDateTime;
+	private BigDecimal transactionAmount;
 
-    public Long getTransactionId() {
+	private Timestamp transactionDateTime;
+
+	public Long getTransactionId() {
 		return transactionId;
 	}
 
@@ -56,7 +55,6 @@ public class Transaction {
 		this.transactionDateTime = transactionDateTime;
 	}
 
-	
 	public Transaction() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -77,9 +75,5 @@ public class Transaction {
 		this.type = type;
 		this.transactionAmount = transactionAmount;
 	}
-
-
-
-	
 
 }

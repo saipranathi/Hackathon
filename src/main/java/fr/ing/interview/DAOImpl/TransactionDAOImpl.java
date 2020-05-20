@@ -26,45 +26,31 @@ public class TransactionDAOImpl implements TransactionDAO {
 	public int save(Transaction account) {
 		String query = "INSERT INTO transaction(transaction_id,account_number,transaction_amount,type) VALUES(?,?,?,?)";
 
-		 return template.update(query, account.getTransactionId(), account.getAccountNumber(),
+		return template.update(query, account.getTransactionId(), account.getAccountNumber(),
 				account.getTransactionAmount(), account.getType());
 
 	}
 
 	@Override
 	public List<Transaction> fetchTxnList(String accountNumber) {
-	       String query = "SELECT * FROM transaction where account_number=?";
-//	       ResultSet transaction =  template.queryForObject(query,new Object[]{accountNumber},
-//	       		new BeanPropertyRowMapper<>(Transaction.class));
-//	       
-//	       template.query(query, new RowCallbackHandler()){
-//	    	   {
-//	    		   p
-//	    	   }
-//	    	   
-//	       }
-//	       ResultSet rs=template.executeQuery();
-	       return template.query(query,new ResultSetExtractor<List<Transaction>>(){  
-	    	    @Override  
-	    	     public List<Transaction> extractData(ResultSet rs) throws SQLException,  
-	    	            DataAccessException {  
-	    	      
-	    	        List<Transaction> list=new ArrayList<Transaction>();  
-	    	        while(rs.next()){  
-	    	        Transaction t=new Transaction();  
-	    	        t.setTransactionId(rs.getLong(1));
-	    	        t.setAccountNumber(rs.getString(2));
-	    	        t.setTransactionAmount(rs.getBigDecimal(3));
-	    	        t.setType(rs.getString(4));
-	    	        t.setTransactionDateTime(rs.getTimestamp(5));
-	    	        list.add(t);  
-	    	        }  
-	    	        return list;  
-	    	        }  
-	    	    },accountNumber);  
+		String query = "SELECT * FROM transaction where account_number=?";
+		return template.query(query, new ResultSetExtractor<List<Transaction>>() {
+			@Override
+			public List<Transaction> extractData(ResultSet rs) throws SQLException, DataAccessException {
 
-	       
-	       	       
+				List<Transaction> list = new ArrayList<Transaction>();
+				while (rs.next()) {
+					Transaction t = new Transaction();
+					t.setTransactionId(rs.getLong(1));
+					t.setAccountNumber(rs.getString(2));
+					t.setTransactionAmount(rs.getBigDecimal(3));
+					t.setType(rs.getString(4));
+					t.setTransactionDateTime(rs.getTimestamp(5));
+					list.add(t);
+				}
+				return list;
+			}
+		}, accountNumber);
 
 	}
 

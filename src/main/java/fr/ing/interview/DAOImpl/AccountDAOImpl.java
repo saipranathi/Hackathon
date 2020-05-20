@@ -28,12 +28,11 @@ public class AccountDAOImpl implements AccountDAO {
 	@Override
 	public Account save(Account account) {
 		int updateCount = 0;
-	     LocalDateTime currentTime = LocalDateTime.now();
-	      LocalDate modifiedDate = currentTime.toLocalDate();
+		LocalDateTime currentTime = LocalDateTime.now();
+		LocalDate modifiedDate = currentTime.toLocalDate();
 
 		String query = "update  account set current_balance=?,modified_date=? where account_number=?";
-		updateCount = template.update(query, account.getCurrentBalance(), modifiedDate,
-				account.getAccountNumber());
+		updateCount = template.update(query, account.getCurrentBalance(), modifiedDate, account.getAccountNumber());
 		if (updateCount > 0) {
 			LOGGER.debug("Inserted Succcesfully ");
 			account.setMessage(successMsg);
@@ -53,7 +52,7 @@ public class AccountDAOImpl implements AccountDAO {
 		return account;
 
 	}
-	
+
 	@Override
 	public Account fetchBalance(String accountNumber) {
 		String query = "SELECT current_balance FROM account WHERE account_number=?";
@@ -62,6 +61,5 @@ public class AccountDAOImpl implements AccountDAO {
 
 		return account;
 	}
-
 
 }

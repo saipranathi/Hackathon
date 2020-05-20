@@ -1,4 +1,5 @@
 package fr.ing.interview.Model;
+
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -12,17 +13,17 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "account")
 public class Account {
-	
+
 	@Id
-	@Column	
+	@Column
 	String accountNumber;
 	String accountName;
-    BigDecimal currentBalance;
-    char active;
-    Date modifiedDate;
-    Timestamp createdDate;
-    @Transient
-    String message;
+	BigDecimal currentBalance;
+	char active;
+	Date modifiedDate;
+	Timestamp createdDate;
+	@Transient
+	String message;
 
 	public void setModifiedDate(Timestamp modifiedDate) {
 		this.modifiedDate = modifiedDate;
@@ -31,7 +32,6 @@ public class Account {
 	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;
 	}
-
 
 	public String getAccountName() {
 		return accountName;
@@ -100,10 +100,5 @@ public class Account {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-
-
-	
-	
 
 }

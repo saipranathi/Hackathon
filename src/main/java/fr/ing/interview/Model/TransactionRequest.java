@@ -2,13 +2,11 @@ package fr.ing.interview.Model;
 
 import java.math.BigDecimal;
 
-
 public class TransactionRequest {
 
 	private String AccountNumber;
 
 	private BigDecimal amount;
-	
 
 	public String getAccountNumber() {
 		return AccountNumber;
@@ -31,7 +29,5 @@ public class TransactionRequest {
 		AccountNumber = accountNumber;
 		this.amount = amount;
 	}
-	
-	
 
 }

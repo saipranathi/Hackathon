@@ -17,7 +17,6 @@ public class BankResponse {
 		return ErrorMessage;
 	}
 
-
 	public void setErrorMessage(String errorMessage) {
 		ErrorMessage = errorMessage;
 	}
@@ -36,28 +35,23 @@ public class BankResponse {
 		ErrorMessage = errorMessage;
 	}
 
-
 	public BankResponse() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public BankResponse setExceptionData()
-	{
-		BankResponse res= new BankResponse();
-		 res.setErrorMessage(resMsg);
-		 return res;
+	public BankResponse setExceptionData() {
+		BankResponse res = new BankResponse();
+		res.setErrorMessage(resMsg);
+		return res;
 	}
-
 
 	public List<Transaction> getTransactionDetailsList() {
 		return TransactionDetailsList;
 	}
 
-
 	public void setTransactionDetailsList(List<Transaction> transactionDetailsList) {
 		TransactionDetailsList = transactionDetailsList;
 	}
-	
 
 }

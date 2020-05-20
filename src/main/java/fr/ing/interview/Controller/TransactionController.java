@@ -18,7 +18,6 @@ import fr.ing.interview.Service.TransactionService;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-	
 	private static Logger logger = LoggerFactory.getLogger(AccountController.class);
 
 	@Autowired(required = true)
@@ -27,15 +26,15 @@ public class TransactionController {
 	@GetMapping(value = "/displayTxn/{accountNumber}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public BankResponse DisplayTxn(@PathVariable("accountNumber") String accountNumber) throws Exception {
-		BankResponse response= new BankResponse();
+		BankResponse response = new BankResponse();
 		try {
 			response = transactionService.displayTransactions(accountNumber);
 		} catch (Exception e) {
-			logger.error("Exception Occured",e);
-			response=response.setExceptionData();
+			logger.error("Exception Occured", e);
+			response = response.setExceptionData();
 		}
 
 		return response;
 
-}
+	}
 }

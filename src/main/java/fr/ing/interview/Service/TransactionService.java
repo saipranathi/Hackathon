@@ -4,6 +4,6 @@ import fr.ing.interview.Response.BankResponse;
 
 public interface TransactionService {
 
-	public BankResponse displayTransactions(String request)throws Exception;
+	public BankResponse displayTransactions(String request) throws Exception;
 
 }

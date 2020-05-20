@@ -38,13 +38,13 @@ public class TestAccountService {
 
 		a1 = new TransactionRequest("200", testAmt);
 		acc = new Account("200", "saipranathi", testBal, 'y', timestamp, timestamp);
-		bal=new Account(null, null, testBal,'\u0000', null, null);
+		bal = new Account(null, null, testBal, '\u0000', null, null);
 		res = new BankResponse(acc, "null");
 		balance = new BankResponse(bal, "null");
 
-
 		when(accountService.Deposit(a1)).thenReturn(res);
-	    when(accountService.FetchBalance("300")).thenReturn(balance);
+		when(accountService.FetchBalance("300")).thenReturn(balance);
+		when(accountService.WithDrawAmount(a1)).thenReturn(res);
 
 	}
 
@@ -65,13 +65,25 @@ public class TestAccountService {
 
 	}
 
-    @Test
-    public void testFetchBalance() throws Exception{   
-    
+	@Test
+	public void testFetchBalance() throws Exception {
 
 		BankResponse acc = accountService.FetchBalance("300");
-        assertEquals(testBal, acc.getAccountDetails().getCurrentBalance());
+		assertEquals(testBal, acc.getAccountDetails().getCurrentBalance());
 
-}
+	}
+	
+	@Test
+	public void testWithDrawAmount() throws Exception {
+		BankResponse acc = accountService.WithDrawAmount(a1);
+		assertEquals("200", acc.getAccountDetails().getAccountNumber());
+		assertEquals("saipranathi", acc.getAccountDetails().getAccountName());
+		assertEquals(testBal, acc.getAccountDetails().getCurrentBalance());
+		assertEquals('y', acc.getAccountDetails().getActive());
+		assertEquals(timestamp, acc.getAccountDetails().getModifiedDate());
+		assertEquals(timestamp, acc.getAccountDetails().getCreatedDate());
+
+	}
+
 
 }

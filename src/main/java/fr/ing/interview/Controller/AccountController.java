@@ -15,7 +15,6 @@ import fr.ing.interview.Model.TransactionRequest;
 import fr.ing.interview.Response.BankResponse;
 import fr.ing.interview.Service.AccountService;
 
-
 @Controller
 @EnableAutoConfiguration
 @RequestMapping("/account")
@@ -29,48 +28,44 @@ public class AccountController {
 	@PostMapping(value = "/depositAmount", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public BankResponse DepositAmount(@RequestBody TransactionRequest request) throws Exception {
-		BankResponse response= new BankResponse();
+		BankResponse response = new BankResponse();
 		try {
 			response = accountService.Deposit(request);
 		} catch (Exception e) {
-			logger.error("Exception Occured",e);
-			response=response.setExceptionData();
+			logger.error("Exception Occured", e);
+			response = response.setExceptionData();
 		}
 
 		return response;
 	}
-	
+
 	@GetMapping(value = "/getCurrentBalnce/{accountNumber}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public BankResponse GetCurrentBalance(@PathVariable("accountNumber") String accountNumber) {
-		BankResponse response= new BankResponse();
+		BankResponse response = new BankResponse();
 		try {
 			response = accountService.FetchBalance(accountNumber);
 		} catch (Exception e) {
-			logger.error("Exception Occured",e);
-			response=response.setExceptionData();
+			logger.error("Exception Occured", e);
+			response = response.setExceptionData();
 
 		}
 
 		return response;
 	}
 
-	
 	@PostMapping(value = "/withDrawAmount", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public BankResponse WithDrawAmount(@RequestBody TransactionRequest request) throws Exception {
-		BankResponse response= new BankResponse();
+		BankResponse response = new BankResponse();
 		try {
 			response = accountService.WithDrawAmount(request);
 		} catch (Exception e) {
-			logger.error("Exception Occured",e);
-			response=response.setExceptionData();
+			logger.error("Exception Occured", e);
+			response = response.setExceptionData();
 		}
 
 		return response;
 	}
-	
-
-
 
 }

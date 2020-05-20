@@ -1,6 +1,5 @@
 package fr.ing.interview.ServiceImpl;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,13 +20,10 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public BankResponse displayTransactions(String accountNumber) throws Exception {
 		BankResponse response = new BankResponse();
-		List<Transaction> Txns=new ArrayList<Transaction>();
+		List<Transaction> Txns = new ArrayList<Transaction>();
 		Txns = transactionDao.fetchTxnList(accountNumber);
 		response.setTransactionDetailsList(Txns);
 		return response;
 	}
-
-	
-	 
 
 }

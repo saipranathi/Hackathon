@@ -4,10 +4,10 @@ import fr.ing.interview.Model.Account;
 
 public interface AccountDAO {
 
-	public Account save(Account fromAccount) ;
-    public Account findByAccountNumberEquals(String accountNumber) ;
+	public Account save(Account fromAccount);
+
+	public Account findByAccountNumberEquals(String accountNumber);
+
 	public Account fetchBalance(String accountNumber);
-
-
 
 }
