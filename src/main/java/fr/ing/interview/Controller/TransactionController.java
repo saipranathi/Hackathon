@@ -28,6 +28,7 @@ public class TransactionController {
 	@GetMapping(value = "/displayTxn/{accountNumber}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public List<Transaction> DisplayTxn(@PathVariable("accountNumber") String accountNumber) throws Exception {
+		logger.info("Start of DisplayTxn() API,It input is AccountNumber",accountNumber);
 		try {
 			return transactionService.displayTransactions(accountNumber);
 		}

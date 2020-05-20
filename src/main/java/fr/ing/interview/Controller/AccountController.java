@@ -38,11 +38,7 @@ public class AccountController {
 			throw new MinimumAmountException("Amount Greater than of 0.01 is required");
 
 		}
-		try {
-			res = accountService.Deposit(request);
-		} catch (Exception exception) {
-			throw new Exception("Transaction Failed  " + exception.getMessage());
-		}
+		res = accountService.Deposit(request);
 		logger.info("End of DepositAmount() API,It output is AccountNumber ", request.getAccountNumber());
 		return res;
 
