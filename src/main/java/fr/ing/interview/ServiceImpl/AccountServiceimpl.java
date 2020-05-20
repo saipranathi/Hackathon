@@ -34,7 +34,10 @@ public class AccountServiceimpl implements AccountService {
 	public String Deposit(TransactionRequest request) throws Exception {
 		logger.info("Start of DepositAmount() service,Its input is AccountNumber '{}' and DepositAmount '{}'",
 				request.getAccountNumber(), request.getAmount());
+		if (!(request.getAmount().compareTo(minAmt) == 1)) {
+			throw new MinimumAmountException("Amount Greater than of 0.01 is required");
 
+		}
 		String accountNumber = request.getAccountNumber();
 		BigDecimal amount = request.getAmount();
 

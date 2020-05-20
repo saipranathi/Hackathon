@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import static fr.ing.interview.Constants.*;
-
 import fr.ing.interview.Exception.MinimumAmountException;
 import fr.ing.interview.Model.Account;
 import fr.ing.interview.Model.TransactionRequest;
@@ -34,10 +32,6 @@ public class AccountController {
 		logger.info("Start of DepositAmount() API,Its input is AccountNumber '{}' and DepositAmount '{}'",
 				request.getAccountNumber(), request.getAmount());
 		String res = null;
-		if (!(request.getAmount().compareTo(minAmt) == 1)) {
-			throw new MinimumAmountException("Amount Greater than of 0.01 is required");
-
-		}
 		res = accountService.Deposit(request);
 		logger.info("End of DepositAmount() API,It output is AccountNumber '{}' ",res);
 		return res;

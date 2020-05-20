@@ -25,9 +25,6 @@ public class Account {
 	@Transient
 	String message;
 
-	public void setModifiedDate(Timestamp modifiedDate) {
-		this.modifiedDate = modifiedDate;
-	}
 
 	public void setCreatedDate(Timestamp createdDate) {
 		this.createdDate = createdDate;

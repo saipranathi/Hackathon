@@ -17,7 +17,6 @@ public class AccountDAOImpl implements AccountDAO {
 	@Autowired
 	JdbcTemplate template;
 
-
 	@Override
 	public int save(Account account) {
 		LocalDateTime currentTime = LocalDateTime.now();
