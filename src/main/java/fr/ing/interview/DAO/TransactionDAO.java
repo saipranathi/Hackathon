@@ -1,5 +1,12 @@
 package fr.ing.interview.DAO;
 
-public class TransactionDAO {
+import fr.ing.interview.Model.Transaction;
+
+public interface TransactionDAO {
+
+
+    public int save(Transaction fromAccount);
+
+
 
 }

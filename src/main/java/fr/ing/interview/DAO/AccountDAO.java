@@ -1,5 +1,12 @@
 package fr.ing.interview.DAO;
 
-public class AccountDAO {
+import fr.ing.interview.Model.Account;
+
+public interface AccountDAO {
+
+	public Account save(Account fromAccount) ;
+    public Account findByAccountNumberEquals(String accountNumber) ;
+
+
 
 }
