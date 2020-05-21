@@ -28,7 +28,7 @@ public class TestAccountService {
 		accountService = mock(AccountService.class);
 
 		a1 = new TransactionRequest("200", testAmt);
-		bal = new Account(null, null, testBal, '\u0000', null, null);
+		bal = new Account(null, null, minAmt, '\u0000', null, null);
 
 		when(accountService.Deposit(a1)).thenReturn("400");
 		when(accountService.FetchBalance("300")).thenReturn(bal);
@@ -52,7 +52,7 @@ public class TestAccountService {
 	public void testFetchBalance() throws Exception {
 
 		Account acc = accountService.FetchBalance("300");
-		assertEquals(testBal, acc.getCurrentBalance());
+		assertEquals(minAmt, acc.getCurrentBalance());
 
 	}
 	

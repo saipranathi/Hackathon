@@ -30,11 +30,12 @@ public class AccountServiceimpl implements AccountService {
 	private static Logger logger = LoggerFactory.getLogger(AccountServiceimpl.class);
 
 	@Override
-	@Transactional(rollbackFor = { RuntimeException.class })
+	@Transactional
 	public String Deposit(TransactionRequest request) throws Exception {
 		logger.info("Start of DepositAmount() service,Its input is AccountNumber '{}' and DepositAmount '{}'",
 				request.getAccountNumber(), request.getAmount());
 		if (!(request.getAmount().compareTo(minAmt) == 1)) {
+			transactionDao.save(new Transaction(0L, request.getAccountNumber(), txnFail, request.getAmount()));
 			throw new MinimumAmountException("Amount Greater than of 0.01 is required");
 
 		}
@@ -46,7 +47,8 @@ public class AccountServiceimpl implements AccountService {
 		accountDao.save(account);
 		transactionDao.save(new Transaction(0L, accountNumber, credited, amount));
 		logger.info("End of DepositAmount() Service,It output is AccountNumber '{}' ", account.getAccountNumber());
-		return account.getAccountNumber();
+		logger.info(account.getAccountNumber());
+        return account.getAccountNumber();
 
 	}
 
@@ -64,7 +66,7 @@ public class AccountServiceimpl implements AccountService {
 	}
 
 	@Override
-	@Transactional(rollbackFor = { RuntimeException.class })
+	@Transactional
 	public String WithDrawAmount(TransactionRequest request) throws Exception, MinimumAmountException {
 		logger.info("Start of WithDrawAmount() service,It input is AccountNumber '{}' and '{}'Amount to withdraw",
 				request.getAccountNumber(), request.getAmount());
@@ -73,15 +75,17 @@ public class AccountServiceimpl implements AccountService {
 		BigDecimal amount = request.getAmount();
 
 		Account account = accountDao.findByAccountNumberEquals(accountNumber);
-		if (request.getAmount().compareTo(account.getCurrentBalance()) == 1) {
-			throw new MinimumAmountException("No Sufficient Balance");
-
+		if ((request.getAmount().compareTo(account.getCurrentBalance()) == 1) || 
+				(request.getAmount().compareTo(BigDecimal.ZERO) <= 0)) {
+			transactionDao.save(new Transaction(0L, request.getAccountNumber(), txnFail, request.getAmount()));
+			throw new MinimumAmountException("Transaction failed due to insufficient balance or invalid requested amount");
 		}
 
 		account.setCurrentBalance(account.getCurrentBalance().subtract(amount));
 		accountDao.save(account);
 		transactionDao.save(new Transaction(0L, accountNumber, debited, amount));
 		logger.info("End of WithDrawAmount() Service,It output is AccountNumber '{}' ",account.getAccountNumber());
+		logger.info(account.getAccountNumber());
 		return account.getAccountNumber();
 
 	}

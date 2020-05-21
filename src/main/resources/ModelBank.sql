@@ -1,4 +1,7 @@
-	create table account(
+create database testdb;
+use testdb;	
+
+create table account(
 	   account_number VARCHAR(100) NOT NULL,
 	   account_name VARCHAR(100) NOT NULL,
 	   current_balance bigint NOT NULL,
@@ -11,9 +14,10 @@
 	alter table account alter column active set default 'y';
 
 
+insert into account(account_number,account_name,current_balance) values('100ING','saipranathi',100);
+insert into account(account_number,account_name,current_balance) values('200ING','saipranathi',0);
+insert into account(account_number,account_name,current_balance) values('400ING','saipranathi',100);
 insert into account(account_number,account_name,current_balance) values('100','saipranathi',100);
-insert into account(account_number,account_name,current_balance) values('200','saipranathi',0);
-insert into account(account_number,account_name,current_balance) values('400','saipranathi',100);
 
 create table transaction(
    transaction_id INT NOT NULL AUTO_INCREMENT,

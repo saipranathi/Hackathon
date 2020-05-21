@@ -34,8 +34,8 @@ public class TestTransactionService {
 	public static void setUp() throws Exception {
 		transactionService = mock(TransactionService.class);
 		
-		txn1=new Transaction(1L,"400",credited, testBal);
-		txn2=new Transaction(2L,"300",credited, testBal);
+		txn1=new Transaction(1L,"400",credited, minAmt);
+		txn2=new Transaction(2L,"300",credited, minAmt);
 		txnList.add(txn1);
 		txnList.add(txn2);
 
@@ -58,7 +58,7 @@ public class TestTransactionService {
         assertEquals(new Long(1),tx.getTransactionId());
         assertEquals("400", tx.getAccountNumber());
         assertEquals(credited, tx.getType());
-        assertEquals(testBal, tx.getTransactionAmount());
+        assertEquals(minAmt, tx.getTransactionAmount());
 }	  
 
 
